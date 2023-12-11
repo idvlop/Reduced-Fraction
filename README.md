@@ -12,7 +12,7 @@ Operations implemented:
 7. ReduceFraction + int
 8. ReduceFraction - int
 
-Convertions implemented:
+Convertations implemented:
 1. ReduceFraction to double (implicit)
 2. ReduceFraction to int (explicit)
 3. int to ReduceFraction (implicit)
