@@ -36,13 +36,15 @@ namespace ReducedFraction
                 }
             }
         }
-
+        /// <summary>Fraction numerator</summary>
         public int Numerator { get; set; }
+        /// <summary>Fraction denominator</summary>
         public int Denominator { get; set; }
+        /// <summary>Is fraction not a number?</summary>
         public bool IsNan { get; }
 
         /// <summary>Represents a value that is not a number (NaN)</summary>
-        public static ReducedFraction NaN = new ReducedFraction(0, 0);
+        public static ReducedFraction NaN { get => new ReducedFraction(0, 0); }
 
         #region METHODS
         /// <summary>Get Greatest common divisor</summary>

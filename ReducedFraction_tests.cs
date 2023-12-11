@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using System;
 
-namespace Incapsulation.RationalNumbers
+namespace ReducedFraction
 {
     [TestFixture]
     public class ReducedFraction_tests
