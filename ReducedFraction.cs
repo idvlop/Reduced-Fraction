@@ -85,8 +85,11 @@ namespace ReducedFraction
         #endregion
 
         #region OPERATIONS
+
+        /// <summary>Text for "left.IsNan && right.IsNan" ArgumentException in operations</summary>
         private const string TextForBothNanArgException = "Both arguments can not be NaN.";
 
+        /// <summary>ReducedFraction * ReducedFraction</summary>
         public static ReducedFraction operator *(ReducedFraction left, ReducedFraction right)
         {
             if (left.IsNan && right.IsNan)
@@ -102,6 +105,7 @@ namespace ReducedFraction
                 : new ReducedFraction(newNumerator, newDenominator);
         }
 
+        /// <summary>ReducedFraction / ReducedFraction</summary>
         public static ReducedFraction operator /(ReducedFraction left, ReducedFraction right)
         {
             if (left.IsNan && right.IsNan)
@@ -117,6 +121,7 @@ namespace ReducedFraction
                 : new ReducedFraction(newNumerator, newDenominator);
         }
 
+        /// <summary>ReducedFraction + ReducedFraction</summary>
         public static ReducedFraction operator +(ReducedFraction left, ReducedFraction right)
         {
             if (left.IsNan && right.IsNan)
@@ -133,6 +138,7 @@ namespace ReducedFraction
             return new ReducedFraction(newNumerator, lcm);
         }
 
+        /// <summary>ReducedFraction - ReducedFraction</summary>
         public static ReducedFraction operator -(ReducedFraction left, ReducedFraction right)
         {
             if (left.IsNan && right.IsNan)
