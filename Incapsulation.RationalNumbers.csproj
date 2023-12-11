@@ -51,7 +51,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rational.cs" />
-    <Compile Include="Rational_should.cs" />
+    <Compile Include="Rational_tests.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>

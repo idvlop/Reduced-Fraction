@@ -4,7 +4,7 @@ using System;
 namespace Incapsulation.RationalNumbers
 {
     [TestFixture]
-    public class Rational_should
+    public class Rational_tests
     {
         public void AssertEqual(int expectedNumerator, int expectedDenominator, Rational actual)
         {
