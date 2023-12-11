@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 
 namespace ReducedFraction
@@ -8,9 +9,9 @@ namespace ReducedFraction
     {
         public void AssertEqual(int expectedNumerator, int expectedDenominator, ReducedFraction actual)
         {
-            Assert.False(actual.IsNan);
-            Assert.AreEqual(expectedNumerator, actual.Numerator);
-            Assert.AreEqual(expectedDenominator, actual.Denominator);
+            Assert.That(!actual.IsNan);
+            Assert.That(actual.Numerator, Is.EqualTo(expectedNumerator));
+            Assert.That(actual.Denominator, Is.EqualTo(expectedDenominator));
         }
 
         #region INIT_TESTS
@@ -29,7 +30,7 @@ namespace ReducedFraction
         [Test]
         public void InitializeWithZeroDenominator()
         {
-            Assert.True(new ReducedFraction(2, 0).IsNan);
+            Assert.That(new ReducedFraction(2, 0).IsNan);
         }
 
         [Test]
@@ -77,7 +78,7 @@ namespace ReducedFraction
         public void ExplicitlyConvertToInt(int numerator, int denominator, int expectedValue)
         {
             int a = (int)new ReducedFraction(numerator, denominator);
-            Assert.AreEqual(expectedValue, a);
+            Assert.That(a, Is.EqualTo(expectedValue));
         }
 
         [TestCase(1, 2)]
@@ -102,8 +103,8 @@ namespace ReducedFraction
         [Test]
         public void SumWithNan()
         {
-            Assert.True((new ReducedFraction(1, 2) + new ReducedFraction(1, 0)).IsNan);
-            Assert.True((new ReducedFraction(1, 0) + new ReducedFraction(1, 2)).IsNan);
+            Assert.That((new ReducedFraction(1, 2) + new ReducedFraction(1, 0)).IsNan);
+            Assert.That((new ReducedFraction(1, 0) + new ReducedFraction(1, 2)).IsNan);
         }
 
         [Test]
@@ -115,8 +116,8 @@ namespace ReducedFraction
         [Test]
         public void SubtractWithNan()
         {
-            Assert.True((new ReducedFraction(1, 2) - new ReducedFraction(1, 0)).IsNan);
-            Assert.True((new ReducedFraction(1, 0) - new ReducedFraction(1, 2)).IsNan);
+            Assert.That((new ReducedFraction(1, 2) - new ReducedFraction(1, 0)).IsNan);
+            Assert.That((new ReducedFraction(1, 0) - new ReducedFraction(1, 2)).IsNan);
         }
 
         [Test]
@@ -128,8 +129,8 @@ namespace ReducedFraction
         [Test]
         public void MultiplyWithNan()
         {
-            Assert.True((new ReducedFraction(1, 2) * new ReducedFraction(1, 0)).IsNan);
-            Assert.True((new ReducedFraction(1, 0) * new ReducedFraction(1, 2)).IsNan);
+            Assert.That((new ReducedFraction(1, 2) * new ReducedFraction(1, 0)).IsNan);
+            Assert.That((new ReducedFraction(1, 0) * new ReducedFraction(1, 2)).IsNan);
         }
 
         [Test]
@@ -141,14 +142,14 @@ namespace ReducedFraction
         [Test]
         public void DivideWithNan()
         {
-            Assert.True((new ReducedFraction(1, 2) / new ReducedFraction(1, 0)).IsNan);
-            Assert.True((new ReducedFraction(1, 0) / new ReducedFraction(1, 2)).IsNan);
+            Assert.That((new ReducedFraction(1, 2) / new ReducedFraction(1, 0)).IsNan);
+            Assert.That((new ReducedFraction(1, 0) / new ReducedFraction(1, 2)).IsNan);
         }
 
         [Test]
         public void DivideToZero()
         {
-            Assert.True((new ReducedFraction(1, 2) / new ReducedFraction(0, 5)).IsNan);
+            Assert.That((new ReducedFraction(1, 2) / new ReducedFraction(0, 5)).IsNan);
         }
 
         [TestCase(1, 2, 0.5d)]
@@ -160,7 +161,7 @@ namespace ReducedFraction
         public void ConvertToDouble(int numerator, int denominator, double expectedValue)
         {
             double v = new ReducedFraction(numerator, denominator);
-            Assert.AreEqual(expectedValue, v, 1e-7);
+            Assert.That(v, Is.EqualTo(expectedValue).Within(1e-7));
         }
         #endregion
         
@@ -184,8 +185,8 @@ namespace ReducedFraction
         [Test]
         public void SumNanWithInt()
         {
-            Assert.True((1 + new ReducedFraction(1, 0)).IsNan);
-            Assert.True((new ReducedFraction(1, 0) + 1).IsNan);
+            Assert.That((1 + new ReducedFraction(1, 0)).IsNan);
+            Assert.That((new ReducedFraction(1, 0) + 1).IsNan);
         }
 
         [Test]
@@ -203,8 +204,8 @@ namespace ReducedFraction
         [Test]
         public void SubtractNanWithInt()
         {
-            Assert.True((1 - new ReducedFraction(1, 0)).IsNan);
-            Assert.True((new ReducedFraction(1, 0) - 1).IsNan);
+            Assert.That((1 - new ReducedFraction(1, 0)).IsNan);
+            Assert.That((new ReducedFraction(1, 0) - 1).IsNan);
         }
 
         [Test]
@@ -227,8 +228,8 @@ namespace ReducedFraction
         public void MultiplyNanWithInt()
         {
  
-            Assert.True((new ReducedFraction(1, 0) * 6).IsNan);
-            Assert.True((6 * new ReducedFraction(1, 0)).IsNan);
+            Assert.That((new ReducedFraction(1, 0) * 6).IsNan);
+            Assert.That((6 * new ReducedFraction(1, 0)).IsNan);
         }
 
         [Test]
@@ -246,15 +247,15 @@ namespace ReducedFraction
         [Test]
         public void DivideNanWithInt()
         {
-            Assert.True((5 / new ReducedFraction(1, 0)).IsNan);
+            Assert.That((5 / new ReducedFraction(1, 0)).IsNan);
         }
 
         [Test]
         public void DivideToZeroWithInt()
         {
-            Assert.True((new ReducedFraction(1, 2) / 0).IsNan);
-            Assert.False((0 / new ReducedFraction(1, 2)).IsNan);
-            Assert.True((5 / new ReducedFraction(0, 1)).IsNan);
+            Assert.That((new ReducedFraction(1, 2) / 0).IsNan);
+            Assert.That(!(0 / new ReducedFraction(1, 2)).IsNan);
+            Assert.That((5 / new ReducedFraction(0, 1)).IsNan);
         }
         #endregion
     }
