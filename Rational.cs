@@ -13,16 +13,30 @@ namespace Incapsulation.RationalNumbers
             Numerator = 0;
             Denominator = 0;
             IsNan = false;
-            Denominator = numerator == 0 ? 1 : denominator;
+            Denominator = numerator == 0 && denominator != 0 ? 1 : denominator;
             Numerator = numerator;
             IsNan = denominator == 0;
-            var isInproper = !IsNan && numerator != 0 && denominator != 1 && numerator != 1;
-            if (isInproper)
+            if (!IsNan)
             {
-                var rat = ToProper(numerator, denominator);
-                Numerator = rat.Numerator;
-                Denominator = rat.Denominator;
+                var gcd = GCD(Numerator, Denominator);
+                if(gcd != 1)
+                {
+                    Denominator /= gcd;
+                    Numerator /= gcd;
+                }
+                if (Denominator < 0)
+                {
+                    Numerator = -Numerator;
+                    Denominator = -Denominator;
+                }
             }
+            //var isInproper = !IsNan && numerator != 0 && denominator != 1 && denominator != -1 && numerator != 1 && numerator != -1;
+            //if (isInproper)
+            //{
+            //    var rat = ToProper(numerator, denominator);
+            //    Numerator = rat.Numerator;
+            //    Denominator = rat.Denominator;
+            //}
         }
 
         public int Numerator { get; set; }
@@ -31,8 +45,10 @@ namespace Incapsulation.RationalNumbers
 
         public static Rational operator +(Rational left, Rational right)
         {
-            if (left.IsNan || right.IsNan)
+            if (left.IsNan && right.IsNan)
                 throw new ArgumentException();
+            else if (right.IsNan || left.IsNan)
+                return GetNan;
 
             var lcm = LCM(left.Denominator, right.Denominator);
             var gcd1 = GCD(lcm, left.Numerator);
@@ -45,25 +61,29 @@ namespace Incapsulation.RationalNumbers
 
         public static Rational operator *(Rational left, Rational right)
         {
-            if (left.IsNan || right.IsNan)
+            if (left.IsNan && right.IsNan)
                 throw new ArgumentException();
+            else if (right.IsNan || left.IsNan)
+                return GetNan;
 
             var newNom = left.Numerator * right.Numerator;
             var newDen = left.Denominator * right.Denominator;
 
-            return ToProper(newNom, newDen);
+            return newDen == 0 ? GetNan : ToProper(newNom, newDen);
         }
 
         public static Rational operator -(Rational left, Rational right)
         {
-            if (left.IsNan || right.IsNan)
+            if (left.IsNan && right.IsNan)
                 throw new ArgumentException();
+            else if (right.IsNan || left.IsNan)
+                return GetNan;
 
             var lcm = LCM(left.Denominator, right.Denominator);
-            var gcd1 = GCD(lcm, left.Numerator);
-            var gcd2 = GCD(lcm, right.Numerator);
+            var multForLeftNum = lcm / left.Denominator;
+            var multForRightNum = lcm / right.Denominator;
 
-            var newNumerator = left.Numerator * gcd1 - right.Numerator * gcd2;
+            var newNumerator = left.Numerator * multForLeftNum - right.Numerator * multForRightNum;
 
             return ToProper(newNumerator, lcm);
         }
@@ -83,7 +103,7 @@ namespace Incapsulation.RationalNumbers
                 newNom = -newNom;
                 newDen = -newDen;
             }
-            return ToProper(newNom, newDen);
+            return newDen == 0 ? GetNan : ToProper(newNom, newDen);
         }
 
         public static implicit operator double(Rational rational) => 
@@ -108,25 +128,50 @@ namespace Incapsulation.RationalNumbers
         // GCD - Greatest common divisor
         private static int GCD(int a, int b)
         {
-            if (a == 1 || b == 1 )
-                return 1;
+            //if (a == 1 || b == 1 )
+            //    return 1;
 
-            while (a != 0 && b != 0)
-            {
-                if (a > b)
-                    a %= b;
-                else
-                    b %= a;
-            }
+            //while (a != 0 && b != 0)
+            //{
+            //    if (a > b)
+            //        a %= b;
+            //    else
+            //        b %= a;
+            //}
 
-            return a | b;
+            //return a | b;
+
+            var res = Math.Abs((a * b) / LCM(a, b));
+            return res == 0 ? 1 : res;
         }
 
         // НОК - Наименьшее общее кратное
         // LCM - Least common multiple
         private static int LCM(int a, int b)
         {
-            return a / GCD(a, b) * b;
+            int num1, num2;
+            a = Math.Abs(a);
+            b = Math.Abs(b);
+            if (a > b)
+            {
+                num1 = a; num2 = b;
+            }
+            else
+            {
+                num1 = b; num2 = a;
+            }
+
+            for (int i = 1; i < num2; i++)
+            {
+                int mult = num1 * i;
+                if (mult % num2 == 0)
+                {
+                    return mult;
+                }
+            }
+
+            var res = num1 * num2;
+            return res == 0 ? 1 : res;
         }
 
         private static Rational ToProper(int a, int b)
