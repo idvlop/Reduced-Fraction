@@ -1,14 +1,14 @@
 ﻿using System;
 
-namespace Incapsulation.RationalNumbers
+namespace ReducedFraction
 {
     /// <summary>Reduced Fraction</summary>
     /// <remarks>*Can be either proper or improper. Can not be a mixed fraction.</remarks>
-    public struct Rational
+    public struct ReducedFraction
     {
         /// <summary>Reduced Fraction</summary>
         /// <remarks>*Can be either proper or improper. Can not be a mixed fraction.</remarks>
-        public Rational(int numerator, int denominator = 1)
+        public ReducedFraction(int numerator, int denominator = 1)
         {
             // init struct properties
             Numerator = 0;
@@ -42,9 +42,9 @@ namespace Incapsulation.RationalNumbers
         public bool IsNan { get; }
 
         /// <summary>Represents a value that is not a number (NaN)</summary>
-        public static Rational NaN = new Rational(0, 0);
+        public static ReducedFraction NaN = new ReducedFraction(0, 0);
 
-        #region methods
+        #region METHODS
         /// <summary>Get Greatest common divisor</summary>
         private static int GetGCD(int a, int b)
         {
@@ -85,7 +85,7 @@ namespace Incapsulation.RationalNumbers
         #region OPERATIONS
         private const string TextForBothNanArgException = "Both arguments can not be NaN.";
 
-        public static Rational operator *(Rational left, Rational right)
+        public static ReducedFraction operator *(ReducedFraction left, ReducedFraction right)
         {
             if (left.IsNan && right.IsNan)
                 throw new ArgumentException(TextForBothNanArgException);
@@ -97,10 +97,10 @@ namespace Incapsulation.RationalNumbers
 
             return newDenominator == 0
                 ? NaN
-                : new Rational(newNumerator, newDenominator);
+                : new ReducedFraction(newNumerator, newDenominator);
         }
 
-        public static Rational operator /(Rational left, Rational right)
+        public static ReducedFraction operator /(ReducedFraction left, ReducedFraction right)
         {
             if (left.IsNan && right.IsNan)
                 throw new ArgumentException(TextForBothNanArgException);
@@ -112,10 +112,10 @@ namespace Incapsulation.RationalNumbers
 
             return newDenominator == 0
                 ? NaN
-                : new Rational(newNumerator, newDenominator);
+                : new ReducedFraction(newNumerator, newDenominator);
         }
 
-        public static Rational operator +(Rational left, Rational right)
+        public static ReducedFraction operator +(ReducedFraction left, ReducedFraction right)
         {
             if (left.IsNan && right.IsNan)
                 throw new ArgumentException(TextForBothNanArgException);
@@ -128,10 +128,10 @@ namespace Incapsulation.RationalNumbers
 
             var newNumerator = left.Numerator * gcd1 + right.Numerator * gcd2;
 
-            return new Rational(newNumerator, lcm);
+            return new ReducedFraction(newNumerator, lcm);
         }
 
-        public static Rational operator -(Rational left, Rational right)
+        public static ReducedFraction operator -(ReducedFraction left, ReducedFraction right)
         {
             if (left.IsNan && right.IsNan)
                 throw new ArgumentException(TextForBothNanArgException);
@@ -144,27 +144,27 @@ namespace Incapsulation.RationalNumbers
 
             var newNumerator = left.Numerator * multForLeftNum - right.Numerator * multForRightNum;
 
-            return new Rational(newNumerator, lcm);
+            return new ReducedFraction(newNumerator, lcm);
         }
         #endregion
 
         #region CONVERTATION
         /// <summary>Implicitly convert int to Rational</summary>
-        public static implicit operator Rational(int x) => new Rational(x);
+        public static implicit operator ReducedFraction(int x) => new ReducedFraction(x);
 
         /// <summary>Implicitly convert Rational to double</summary>
-        public static implicit operator double(Rational rational) =>
+        public static implicit operator double(ReducedFraction rational) =>
             rational.IsNan
             ? double.NaN
             : rational.Numerator / (double)rational.Denominator;
 
         /// <summary>Explicitly convert Rational to int</summary>
-        public static explicit operator int(Rational rational)
+        public static explicit operator int(ReducedFraction rational)
         {
             if (rational.IsNan)
                 throw new Exception("Can not convert NaN to int.");
 
-            rational = new Rational(rational.Numerator, rational.Denominator);
+            rational = new ReducedFraction(rational.Numerator, rational.Denominator);
 
             return rational.Denominator == 1
                 ? rational.Numerator

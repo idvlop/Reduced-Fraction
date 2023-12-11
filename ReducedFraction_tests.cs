@@ -4,9 +4,9 @@ using System;
 namespace Incapsulation.RationalNumbers
 {
     [TestFixture]
-    public class Rational_tests
+    public class ReducedFraction_tests
     {
-        public void AssertEqual(int expectedNumerator, int expectedDenominator, Rational actual)
+        public void AssertEqual(int expectedNumerator, int expectedDenominator, ReducedFraction actual)
         {
             Assert.False(actual.IsNan);
             Assert.AreEqual(expectedNumerator, actual.Numerator);
@@ -16,25 +16,25 @@ namespace Incapsulation.RationalNumbers
         [Test]
         public void InitializeSimpleRatioCorrectly()
         {
-            AssertEqual(1, 2, new Rational(1, 2));
+            AssertEqual(1, 2, new ReducedFraction(1, 2));
         }
 
         [Test]
         public void InitializeWithoutDenominator()
         {
-            AssertEqual(4, 1, new Rational(4));
+            AssertEqual(4, 1, new ReducedFraction(4));
         }
 
         [Test]
         public void InitializeWithZeroDenominator()
         {
-            Assert.True(new Rational(2, 0).IsNan);
+            Assert.True(new ReducedFraction(2, 0).IsNan);
         }
 
         [Test]
         public void BeCorrectWithZeroNumerator()
         {
-            AssertEqual(0, 1, new Rational(0, 5));
+            AssertEqual(0, 1, new ReducedFraction(0, 5));
         }
 
         [TestCase(1, 2, 2, 4)]
@@ -49,65 +49,65 @@ namespace Incapsulation.RationalNumbers
         [TestCase(1, 1, 1, 1)]
         public void InitializeAndReduce1(int expectedNum, int expectedDen, int num, int den)
         {
-            AssertEqual(expectedNum, expectedDen, new Rational(num, den));
+            AssertEqual(expectedNum, expectedDen, new ReducedFraction(num, den));
         }
 
         [Test]
         public void Sum()
         {
-            AssertEqual(1, 2, new Rational(1, 4) + new Rational(1, 4));
+            AssertEqual(1, 2, new ReducedFraction(1, 4) + new ReducedFraction(1, 4));
         }
 
         [Test]
         public void SumWithNan()
         {
-            Assert.True((new Rational(1, 2) + new Rational(1, 0)).IsNan);
-            Assert.True((new Rational(1, 0) + new Rational(1, 2)).IsNan);
+            Assert.True((new ReducedFraction(1, 2) + new ReducedFraction(1, 0)).IsNan);
+            Assert.True((new ReducedFraction(1, 0) + new ReducedFraction(1, 2)).IsNan);
         }
 
         [Test]
         public void Subtract()
         {
-            AssertEqual(1, 4, new Rational(1, 2) - new Rational(1, 4));
+            AssertEqual(1, 4, new ReducedFraction(1, 2) - new ReducedFraction(1, 4));
         }
 
         [Test]
         public void SubtractWithNan()
         {
-            Assert.True((new Rational(1, 2) - new Rational(1, 0)).IsNan);
-            Assert.True((new Rational(1, 0) - new Rational(1, 2)).IsNan);
+            Assert.True((new ReducedFraction(1, 2) - new ReducedFraction(1, 0)).IsNan);
+            Assert.True((new ReducedFraction(1, 0) - new ReducedFraction(1, 2)).IsNan);
         }
 
         [Test]
         public void Multiply()
         {
-            AssertEqual(-1, 4, new Rational(-1, 2) * new Rational(1, 2));
+            AssertEqual(-1, 4, new ReducedFraction(-1, 2) * new ReducedFraction(1, 2));
         }
 
         [Test]
         public void MultiplyWithNan()
         {
-            Assert.True((new Rational(1, 2) * new Rational(1, 0)).IsNan);
-            Assert.True((new Rational(1, 0) * new Rational(1, 2)).IsNan);
+            Assert.True((new ReducedFraction(1, 2) * new ReducedFraction(1, 0)).IsNan);
+            Assert.True((new ReducedFraction(1, 0) * new ReducedFraction(1, 2)).IsNan);
         }
 
         [Test]
         public void Divide()
         {
-            AssertEqual(-1, 2, new Rational(1, 4) / new Rational(-1, 2));
+            AssertEqual(-1, 2, new ReducedFraction(1, 4) / new ReducedFraction(-1, 2));
         }
 
         [Test]
         public void DivideWithNan()
         {
-            Assert.True((new Rational(1, 2) / new Rational(1, 0)).IsNan);
-            Assert.True((new Rational(1, 0) / new Rational(1, 2)).IsNan);
+            Assert.True((new ReducedFraction(1, 2) / new ReducedFraction(1, 0)).IsNan);
+            Assert.True((new ReducedFraction(1, 0) / new ReducedFraction(1, 2)).IsNan);
         }
 
         [Test]
         public void DivideToZero()
         {
-            Assert.True((new Rational(1, 2) / new Rational(0, 5)).IsNan);
+            Assert.True((new ReducedFraction(1, 2) / new ReducedFraction(0, 5)).IsNan);
         }
 
         [TestCase(1, 2, 0.5d)]
@@ -118,14 +118,14 @@ namespace Incapsulation.RationalNumbers
         [TestCase(0, 0, double.NaN)]
         public void ConvertToDouble(int numerator, int denominator, double expectedValue)
         {
-            double v = new Rational(numerator, denominator);
+            double v = new ReducedFraction(numerator, denominator);
             Assert.AreEqual(expectedValue, v, 1e-7);
         }
 
         [Test]
         public void ConvertFromInt()
         {
-            Rational r = 5;
+            ReducedFraction r = 5;
             AssertEqual(5, 1, r);
         }
 
@@ -143,7 +143,7 @@ namespace Incapsulation.RationalNumbers
         [TestCase(1000, 1, 1000)]
         public void ExplicitlyConvertToInt(int numerator, int denominator, int expectedValue)
         {
-            int a = (int)new Rational(numerator, denominator);
+            int a = (int)new ReducedFraction(numerator, denominator);
             Assert.AreEqual(expectedValue, a);
         }
 
@@ -155,7 +155,7 @@ namespace Incapsulation.RationalNumbers
         [TestCase(2, 4)]
         public void ExplicitlyConvertToIntAndFailsIfNonConvertible(int numerator, int denominator)
         {
-            Assert.Catch<Exception>(() => { int a = (int)new Rational(numerator, denominator); });
+            Assert.Catch<Exception>(() => { int a = (int)new ReducedFraction(numerator, denominator); });
         }
     }
 }

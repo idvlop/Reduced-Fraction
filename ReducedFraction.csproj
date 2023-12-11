@@ -7,8 +7,8 @@
     <ProjectGuid>{86F4F4AD-2459-425B-B99C-5D5B499437C1}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Incapsulation.RationalNumbers</RootNamespace>
-    <AssemblyName>Incapsulation.RationalNumbers</AssemblyName>
+    <RootNamespace>ReducedFraction</RootNamespace>
+    <AssemblyName>ReducedFraction</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -50,8 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rational.cs" />
-    <Compile Include="Rational_tests.cs" />
+    <Compile Include="ReducedFraction.cs" />
+    <Compile Include="ReducedFraction_tests.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
