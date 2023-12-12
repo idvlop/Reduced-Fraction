@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography;
 
 namespace ReducedFraction
 {
@@ -36,15 +37,18 @@ namespace ReducedFraction
                 }
             }
         }
+
         /// <summary>Fraction numerator</summary>
-        public int Numerator { get; set; }
+        public int Numerator { get; }
         /// <summary>Fraction denominator</summary>
-        public int Denominator { get; set; }
+        public int Denominator { get; }
         /// <summary>Is fraction not a number?</summary>
         public bool IsNan { get; }
 
         /// <summary>Represents a value that is not a number (NaN)</summary>
         public static ReducedFraction NaN { get => new ReducedFraction(0, 0); }
+
+        public override string ToString() => $"{Numerator} / {Denominator}";
 
         #region METHODS
         /// <summary>Get Greatest common divisor</summary>
